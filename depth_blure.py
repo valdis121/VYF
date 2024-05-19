@@ -24,10 +24,10 @@ def apply_label_blur(labels_image, base_image, weights):
         image_label = np.zeros_like(base_image, dtype=np.uint8)
         for x in range(image.shape[0]):
             for y in range(image.shape[1]):
-                if labels_image[x][y] == i:
-                    image_label[x][y] = array[x][y]
+                image_label[x][y] = array[x][y]
         if weights[i]!=0:
             image_label = cv2.blur(image_label, (weights[i], weights[i]), 0)
+        image_label *= cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
         images.append(image_label)
 
     return images
@@ -50,12 +50,12 @@ image = Image.open("pasted image 0.png")
 im = get_depth_image(image)
 labels = get_layers(3, im)
 image = np.array(image)
-#visualize_labels(labels)
+visualize_labels(labels)
 image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-#weights = input()
-#weights = weights.split(",")
-#weights = [int(x) for x in weights]
-images = apply_label_blur(labels, image,[9,15,19])
+weights = input()
+weights = weights.split(",")
+weights = [int(x) for x in weights]
+images = apply_label_blur(labels, image,weights)
 image = np.zeros_like(image, dtype=np.uint8)
 for i in range(0, len(images)):
     image+=images[i]

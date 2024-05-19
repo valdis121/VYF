@@ -163,7 +163,7 @@ def show_image(image, title="Image"):
     plt.show()
 
 if __name__ == "__main__":
-    image = Image.open("Aragats.jpg")
+    image = Image.open("pasted image 0.png")
     im = get_depth_image(image)
     im.save("depth.png")
     labels = get_layers(3, im)
@@ -173,7 +173,7 @@ if __name__ == "__main__":
     parsed_input = [int(x) for x in parsed_input]
     labels=close_operation_for_pair(labels, parsed_input[0], parsed_input[1], parsed_input[2])
     visualize_labels(labels)
-    img2 = Image.open("1.jpg")
+    img2 = Image.open("beautiful-small-river.jpg")
     img2 = img2.resize((labels.shape[1], labels.shape[0]))
     user_input_labels = input()
     user_input_labels = user_input_labels.split(",")
