@@ -20,10 +20,10 @@ def apply_label_blur(labels_image, base_image, weights):
     array = np.array(base_image)
     for i in range(len(weights)):
         mask = np.zeros_like(labels_image, dtype=np.uint8)
-        mask[labels == i] = 1
+        mask[labels_image == i] = 1
         image_label = np.zeros_like(base_image, dtype=np.uint8)
-        for x in range(image.shape[0]):
-            for y in range(image.shape[1]):
+        for x in range(base_image.shape[0]):
+            for y in range(base_image.shape[1]):
                 image_label[x][y] = array[x][y]
         if weights[i]!=0:
             image_label = cv2.blur(image_label, (weights[i], weights[i]), 0)
@@ -44,20 +44,20 @@ def apply_bokeh(image, kernel_size=15):
 
     return bokeh
 
+if __name__ == "__main__":
+    image = Image.open("pasted image 0.png")
 
-image = Image.open("pasted image 0.png")
-
-im = get_depth_image(image)
-labels = get_layers(3, im)
-image = np.array(image)
-visualize_labels(labels)
-image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-weights = input()
-weights = weights.split(",")
-weights = [int(x) for x in weights]
-images = apply_label_blur(labels, image,weights)
-image = np.zeros_like(image, dtype=np.uint8)
-for i in range(0, len(images)):
-    image+=images[i]
-    # blended_image.show()
-cv2.imwrite("newimage2.png", image)
+    im = get_depth_image(image)
+    labels = get_layers(3, im)
+    image = np.array(image)
+    visualize_labels(labels)
+    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+    weights = input()
+    weights = weights.split(",")
+    weights = [int(x) for x in weights]
+    images = apply_label_blur(labels, image,weights)
+    image = np.zeros_like(image, dtype=np.uint8)
+    for i in range(0, len(images)):
+        image+=images[i]
+        # blended_image.show()
+    cv2.imwrite("newimage2.png", image)
