@@ -20,7 +20,7 @@ pip install Pillow numpy opencv-python
 Run the script from the command line:
 
 ```bash
-python depth_blur.py
+python main.py
 ```
 
 You will be prompted to choose an experiment type:
